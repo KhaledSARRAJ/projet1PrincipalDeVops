@@ -1,5 +1,9 @@
-FROM openjdk:8-jre
+FROM tomcat:9.0
 
-COPY *.jar myapp.jar
+MAINTAINER KS <khaledinat@gmail.com>
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/.urandom","-jar","/myapp.jar"]
+# Delete existing ROOT folder
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+
+# Copy to images tomcat path
+COPY ROOT.war /usr/local/tomcat/webapps/
