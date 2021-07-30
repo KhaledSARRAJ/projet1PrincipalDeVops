@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Arts & Chat</title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+</head>
+<body>
+
+	<!-- Haut de page -->
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header card bg-info text-white">
+				<h2>[[${message}]]</h2>
+			</div>
+			<div class="card-body">
+				<form th:object="${utilisateur}" method="POST"
+					action="traitement-inscription">
+					<table>
+						<tr>
+							<td><label for="nom">Nom</label></td>
+							<td><input th:field="*{nom}" name="nom" type="text" required= "true" autofocus="true" placeholder="Entrez votre nom"/></td>
+						</tr>
+						<tr>
+							<td><label for="prenom">Prénom</label></td>
+							<td><input th:field="*{prenom}" name="prenom" type="text" required= "true" autofocus="true" placeholder="Entrez votre prenom"/></td>
+						</tr>
+						<tr>
+							<td><label for="idsexe">Sexe</label></td>
+							<td><select name="idsexe">
+									<option th:each="sexe : ${listeSexe}" th:value="${sexe.id}"
+										th:utext="${sexe.nonSexe}"></option>
+							</select></td>
+						</tr>
+						<tr>
+							<td><label for="dateDeNaissance">Date de naissance</label></td>
+							<td><input th:field="*{dateNais}" name="dateDeNaissance" type="date" required= "true" autofocus="true" /></td>
+						</tr>
+						<tr>
+							<td><label for="mail">Mail</label></td>
+							<td><input th:field="*{mail}" name="mail" type="email" required= "true" autofocus="true" placeholder="Entrez votre adresse email"/></td>
+						</tr>
+						<tr>
+							<td><label for="telephone">Téléphone</label></td>
+							<td><input th:field="*{telephone}" name="telephone"
+								type="number" required= "true" autofocus="true" placeholder="Entrez votre numero de telephone"/></td>
+						</tr>
+						<tr>
+							<td><label for="idville">Ville</label></td>
+							<td><select name="idville">
+									<option th:each="ville : ${listeVille}" th:value="${ville.id}"
+										th:utext="${ville.codePostale} + ' ' + ${ville.localite} + ' ' + ${ville.pays}"></option>
+							</select></td>
+						</tr>
+						<tr>
+							<td><label for="rue">Rue</label></td>
+							<td><input th:field="*{rue}" name="rue" type="text" required= "true" autofocus="true" placeholder="Entrez votre rue"/></td>
+						</tr>
+						<tr>
+							<td><label for="complement">Complement</label></td>
+							<td><input th:field="*{complement}" name="complement"
+								type="text" required= "true" autofocus="true" placeholder="Entrez un complement d'adresse"/></td>
+						</tr>
+						<tr>
+							<td><label for="profile">Profile</label></td>
+							<td><input th:field="*{profile}" name="profile" type="text" required= "true" autofocus="true" placeholder="Entrez un login"/></td>
+						</tr>
+						<tr>
+							<td><label for="password">Mot de passe</label></td>
+							<td><input name="password" type="password" required= "true" autofocus="true" placeholder="Entrez un mot de passe"/></td>
+						</tr>
+						<tr>
+							<td><label for="passwordConfirm">Confirmation du mot de passe</label></td>
+							<td><input name="passwordConfirm" type="password" required= "true" autofocus="true" placeholder="Confirmez le mot de passe"/></td>
+						</tr>
+					</table>
+					<input type="submit" value="Valider" class="btn-success"/>&nbsp;
+					<input type="button" value="Annuler" onclick="window.history.back()" class="btn-danger"/>&nbsp;
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Pied de page -->
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+
+</body>
+</html>

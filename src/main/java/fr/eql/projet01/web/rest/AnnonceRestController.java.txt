@@ -1,0 +1,179 @@
+package fr.eql.projet01.web.rest;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import fr.eql.projet01.dto.AnnonceRequest;
+import fr.eql.projet01.dto.AnnonceResponse;
+import fr.eql.projet01.dto.SupportRequest;
+import fr.eql.projet01.dto.SupportResponse;
+import fr.eql.projet01.entity.Annonce;
+import fr.eql.projet01.entity.Support;
+import fr.eql.projet01.exception.AecServiceException;
+import fr.eql.projet01.exception.IllegalOperationException;
+import fr.eql.projet01.exception.NotValidObjectException;
+import fr.eql.projet01.exception.ResourceNotFoundException;
+import fr.eql.projet01.service.AnnonceService;
+import fr.eql.projet01.service.SupportService;
+import fr.eql.projet01.service.UtilisateurService;
+
+@RestController
+@RequestMapping(value="/aec-api-rest/annonces", headers="Accept=application/json")
+public class AnnonceRestController {
+	@Autowired
+	private AnnonceService annonceService;
+	@Autowired
+	private SupportService supportService;
+	@Autowired
+	private UtilisateurService utilisateurService;	
+
+	@GetMapping
+	public ResponseEntity<?> getAll() {
+		ArrayList<AnnonceResponse> annoncesResponse = new ArrayList<AnnonceResponse>();
+		try {
+			for(Annonce a : annonceService.findAll()) {
+				AnnonceResponse annonceResponse = new AnnonceResponse();
+				annonceResponse.setId(a.getId());
+				annonceResponse.setTitre(a.getTitre());
+				annonceResponse.setTexte(a.getTexte());
+				annonceResponse.setDateParution(a.getDateParution());
+				annonceResponse.setPrix(a.getPrix());
+				annonceResponse.setPrenomDupublisher(a.getUtilisateur().getPrenom());
+				ArrayList<SupportResponse> tab = new ArrayList<SupportResponse>();
+				for(Support s : supportService.findSupportByAnnonce(a)) {
+					SupportResponse supportResponse = new SupportResponse();
+					supportResponse.setId(s.getId());
+					supportResponse.setChemin(s.getChemin());
+					supportResponse.setImage(s.getImage());
+					supportResponse.setTypeSupport(s.getTypeSupport());
+					tab.add(supportResponse);
+					annonceResponse.setSupportResponse(tab);
+				}
+				annoncesResponse.add(annonceResponse);
+			}
+
+		} catch(Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Object>(annoncesResponse,HttpStatus.OK);
+	}
+
+	@GetMapping("/page")
+	public Page<Annonce> findAllByPage(Pageable page) {
+		return annonceService.findAllByPage(page);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getOne(@PathVariable(required = true) Long id) {
+		ArrayList<SupportResponse> tab = new ArrayList<SupportResponse>();     
+		AnnonceResponse annonceResponse = new AnnonceResponse();
+		Annonce result;
+		try {
+			result = annonceService.findOne(id);
+			annonceResponse.setId(result.getId());
+			annonceResponse.setTitre(result.getTitre());
+			annonceResponse.setTexte(result.getTexte());
+			annonceResponse.setDateParution(result.getDateParution());
+			annonceResponse.setPrix(result.getPrix());
+			annonceResponse.setPrenomDupublisher(result.getUtilisateur().getPrenom());	
+			for(Support s : supportService.findSupportByAnnonce(result)) {
+				SupportResponse supportResponse = new SupportResponse();
+				supportResponse.setId(s.getId());
+				supportResponse.setChemin(s.getChemin());
+				supportResponse.setImage(s.getImage());
+				supportResponse.setTypeSupport(s.getTypeSupport());
+				tab.add(supportResponse);
+				annonceResponse.setSupportResponse(tab);
+			}
+	} catch (ResourceNotFoundException e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Object>(annonceResponse,HttpStatus.OK);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@RequestBody(required = true) AnnonceRequest annonceRequest, @PathVariable(required = true) Long id) {
+		Annonce saved;
+		try {
+			Assert.notNull(annonceRequest, "Ne peut pas être null.");
+			Assert.notNull(annonceRequest.getId(), "L'identifiant ne peut être null");
+			Assert.isTrue(id.equals(annonceRequest.getId()), "L'id de l'url ne correspond pas à celui de l'objet envoyé.");
+			Annonce annonce = annonceService.findOne(annonceRequest.getId());
+			annonce.setId(annonceRequest.getId());
+			annonce.setTitre(annonceRequest.getTitre());
+			annonce.setTexte(annonceRequest.getTexte());
+			annonce.setPrix(annonceRequest.getPrix());
+			ArrayList<Support> supports = new ArrayList<Support>();
+			for(SupportRequest rs : annonceRequest.getSupports()) {
+				Support support = supportService.findOne(rs.getId());
+				support.setId(rs.getId());
+				support.setChemin(rs.getChemin());
+				support.setTypeSupport(rs.getTypeSupport());
+				support.setImage(rs.getImage());
+				supports.add(supportService.save(support));
+			}
+			saved = annonceService.save(annonce);
+			saved.setSupport(supports);
+		}catch(ResourceNotFoundException e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.NOT_FOUND);
+		}catch(NotValidObjectException e) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		} catch(Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Object>(saved,HttpStatus.OK);
+	}
+
+	@PostMapping
+	public ResponseEntity<?> create(@RequestBody(required = true) Annonce annonce){
+		Annonce a;
+		try {
+			Assert.isNull(annonce.getId(), "L'identifiant doit être null");
+			Assert.notNull(annonce, "Ne peut pas être null.");
+			a = annonceService.save(annonce);
+		} catch (NotValidObjectException e) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		} catch (ResourceNotFoundException e) {
+			return new ResponseEntity<Object>(HttpStatus.FORBIDDEN);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Object>(a, HttpStatus.CREATED);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) throws AecServiceException {
+		Map<String,Object> mapRes = new HashMap<>();
+		try {
+			annonceService.delete(id);
+			mapRes.put("message", "Annonce bien supprimée pour l'id "+id);
+		} catch (ResourceNotFoundException e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.NOT_FOUND);
+		} catch (IllegalOperationException e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.FORBIDDEN);
+		} catch(Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<Object>(mapRes,HttpStatus.OK);
+	}
+}

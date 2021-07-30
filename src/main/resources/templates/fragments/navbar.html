@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+
+
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<style>
+body {
+	padding-top: 60px;
+}
+</style>
+
+</head>
+
+<body>
+
+	<header>
+		<nav th:fragment="nav_fragment"
+			class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<a class="navbar-brand" th:href="@{home}">Arts&Chat</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active" sec:authorize="!isAuthenticated()">
+						<a class="nav-link" th:href="@{home}">Accueil <span
+							class="sr-only">(current)</span>
+					</a>
+					</li>
+					<li class="nav-item active" sec:authorize="isAuthenticated()">
+						<a class="nav-link" href="espaceConnect">Accueil <span
+							class="sr-only">(current)</span>
+					</a>
+					</li>
+					<li class="nav-item" sec:authorize="!isAuthenticated()"><a
+						class="nav-link" href="espaceConnect">Connexion</a></li>
+
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a
+						class="nav-link" th:href="@{Publications}">Mes publications</a></li>
+
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a
+						class="nav-link"
+						th:href="'http://localhost:4200/ngr-annonce-liste/'+${session.utilisateur.id}">Annonces</a></li>
+
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a
+						class="nav-link" th:href="@{http://localhost:8090}">Messageries</a>
+					</li>
+ 					<div sec:authorize="hasRole('ROLE_ADMIN')"> 
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a
+							class="nav-link" th:href="@{http://al35-store-admin-panel.s3-website.eu-west-3.amazonaws.com/}">Espace Administrateur</a></li> 
+				</div> 
+					<li class="nav-item" sec:authorize="!isAuthenticated()"><a
+						class="nav-link" href="inscription">Inscription</a></li>
+
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a
+						class="nav-link" href="session-end">Déconnexion</a></li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+
+</body>
+
+</html>

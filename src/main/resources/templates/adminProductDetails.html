@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Arts & Chat</title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+</head>
+<body>
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header card bg-info text-white">
+				<h2>Détails de la publication</h2>
+			</div>
+
+			<div class="card-body">
+
+				<div>
+				<!-- <p> 
+						ID: <span th:text="${productDto.id}"></span> 
+			</p>  -->	
+					<p>
+					
+					Titre :	<span th:text="${productDto.titre}"></span>
+					</p>
+					<p>
+						Description : <span th:text="${productDto.texte}"></span>
+					</p>
+					<!--<p>
+						Details Name: <span th:text="${publication.support.chemin}"></span>
+					</p>
+					            <img src="/images/oca.png">-->
+					<!--            <img th:src="@{/images/oca.png}">-->
+					
+
+				</div>
+
+				<div th:each="p : ${productDto.support}">
+					<hr />
+				<!-- 	typeSupport : <label th:text="${p.typeSupport}"></label>  -->
+				 <img th:src="'/'+${p.chemin}" width="200" height="120">
+				<!--		Image <img	th:src="*{'data:image/png;base64,'+ p.chemin}"	alt="Oracle Book" width="200" height="120">
+						-->
+				</div>
+			</div>
+
+			<div class="card-footer">
+
+				<a th:href="'Publications'" class="btn btn-danger">Retour</a>
+
+			</div>
+		</div>
+
+	</div>
+
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+
+<head>
+<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+
+	<!-- Haut de page -->
+	<div th:replace="fragments/header :: header" />
+	<br/>
+	<br/>
+	    <p>Utilisateur incorrect </p>
+	<br/>
+	<br/>
+	
+	<!-- Pied de page -->
+	<div th:replace="fragments/footer :: footer" />
+
+</body>
+</html>

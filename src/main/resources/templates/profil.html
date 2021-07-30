@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Arts & Chat</title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+</head>
+<body>
+
+	<!-- Haut de page -->
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header card bg-info text-white">
+				<h2>Détail profil</h2>
+				<p>
+					<a th:href="'majUti?id='+${utilisateur.id}" class="btn btn-success">Modifier
+						profil</a>
+				</p>
+			</div>
+
+			<div class="card-body" th:object="${utilisateur}">
+				<table  class="table table-hover">
+					<!--  	<tr>
+						<td><label>Id</label></td>
+						<td th:utext="*{id}" /></td>
+					</tr> -->
+					<tr>
+						<td><label>Nom</label></td>
+						<td th:utext="*{nom}" /></td>
+					</tr>
+					<tr>
+						<td><label>Prénom</label></td>
+						<td th:utext="*{prenom}" /></td>
+					</tr>
+					<tr>
+						<td><label>Sexe</label></td>
+						<td th:utext="*{sexe.nonSexe}" /></td>
+					</tr>
+					<tr>
+						<td><label>Date de naissance</label></td>
+						<td th:utext="*{dateNais}" /></td>
+					</tr>
+					<tr>
+						<td><label>Mail</label></td>
+						<td th:utext="*{mail}" /></td>
+					</tr>
+					<tr>
+						<td><label>Téléphone</label></td>
+						<td th:utext="*{telephone}" /></td>
+					</tr>
+					<tr>
+						<td><label>Rue</label></td>
+						<td th:utext="*{rue}" /></td>
+					</tr>
+					<tr>
+						<td><label>Ville</label></td>
+						<td th:utext="*{ville.codePostale} "></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td th:utext="*{ville.localite} "></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td th:utext="*{ville.pays} "></td>
+					</tr>
+					<tr>
+						<td><label>Complément</label></td>
+						<td th:utext="*{complement}" /></td>
+					</tr>
+					<tr>
+						<td><label>Username</label></td>
+						<td th:utext="*{profile}" /></td>
+					</tr>
+					<tr>
+						<td><label>Droits</label></td>
+						<td th:utext="*{droits.typeDroit}"></td>
+					</tr>
+					<tr>
+						<td><label>Date d'inscription</label></td>
+						<td th:utext="*{dateInscription}" /></td>
+					</tr>
+				</table>
+				<iframe width="100%" height="450" style="border: 0" loading="lazy"	allowfullscreen
+					th:src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyCdUCHul7-8GSwK-Ko23Zef7XZhTV-VLqI&q='+*{rue}+', '+*{ville.codePostale}+' '+*{ville.localite}+', ' +*{ville.pays}">
+				</iframe>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- Pied de page -->
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+
+</body>
+</html>

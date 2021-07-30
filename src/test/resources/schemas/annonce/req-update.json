@@ -1,0 +1,19 @@
+{
+	"id": "1",
+	"titre":"test",
+	"texte":"test",
+	"prix":"15.00",
+	"dateParution": "2021-06-26T11:00:29.068+00:00",
+	"utilisateur": {
+		"id": 1
+	},
+	"listeSupport": [
+		{
+			"id": 1,
+			"typeSupport": "test"
+		},
+		{
+			"id": 2
+		}
+	]
+}

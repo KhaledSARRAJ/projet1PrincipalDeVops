@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Arts & Chat</title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+</head>
+<body>
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header card bg-info text-white">
+				<h2>Liste des publications</h2>
+				<p>
+					<a th:href="@{FormPublication}" class="btn btn-success">Ajouter
+						une Publication</a>
+				</p>
+			</div>
+			<form th:action="@{/Publications}" method="get">
+				<div class="mb-3">
+					<label class="control-label">Mot Clé:</label> <input type="text"
+						name="motCle" th:value="${motCle}" class="p-1" />
+					<button class="btn btn-primary">Chercher</button>
+				</div>
+
+			</form>
+
+			<div th:if="${message}" th:text="${message}"
+				th:class="${'alert ' + alertClass}"></div>
+
+			<div class="card-body">
+				<div th:if="${publicationsList.isEmpty()}">Pas de publication
+					disponible</div>
+
+				<div th:unless="${publicationsList.isEmpty()}">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+							<!--  <th>ID</th>-->	
+								<th>Titre</th>
+								<th>Texte</th>
+								<th>Détails</th>
+								<th>Image</th>
+								<th>Modifier</th>
+								<th>Supprimer</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="productDto:${publicationsList.content}">
+							<!-- 	<td th:text="${productDto.id}"></td> -->
+								<td th:text="${productDto.titre}"></td>
+								<td th:text="${productDto.texte}"></td>
+
+								<td><a href="#" class="btn btn-info" th:href="@{/find/{id} (id=${productDto.id})}">Details</a>
+								</td>
+								<td><a
+								th:href="@{/uploadImageForm/{id} (id=${productDto.id})}"
+									class="btn btn-success">Ajouter</a></td>
+								<td><a class="btn btn-info"
+									th:href="@{/edit/{id} (id=${productDto.id})}">Modifier</a></td>
+
+								<td><a class="btn btn-danger"
+									onclick="javascript:return confirm('Etes vous sûre de vouloir supprimer ?')"
+									th:href="@{/deletePublications(id=${productDto.id},page=${currentPage}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+
+							</tr>
+
+						</tbody>
+					</table>
+					<ul class="nav nav-pills">
+						<li th:each="page,status:${pages}"><a
+							th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+							th:href="@{/Publications(page=${status.index}, size=${size}, motCle=${motCle})}"
+							th:text="${status.index}"></a></li>
+					</ul>
+				</div>
+			</div>
+
+
+			<div class="card-footer">
+				<a th:href="@{Publications}" class="btn btn-danger">Retour</a>
+
+			</div>
+		</div>
+
+	</div>
+
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+</body>
+</html>

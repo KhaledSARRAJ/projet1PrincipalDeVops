@@ -1,0 +1,69 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Find All annonces",
+	"type": "array",
+	"items": [
+		{
+"type": "object",
+	"properties": {
+		"id": {
+			"description": "identifiant of the annonce",
+			"type": "string"
+		},
+		"titre": {
+			"description": "title of annonce",
+			"type": "string"
+		},
+		"texte": {
+			"description": "content of annonce",
+			"type": "string"
+		},
+		"prix": {
+			"description": "Start date",
+			"type": ["number","null"]
+		},
+		"dateParution": {
+			"description": "start date",
+			"type": ["number","null"]
+		},
+		
+		"support": {
+			"type": "array",
+				"items": [
+				{
+					"type": [
+					"object",
+					"null"
+					],
+							"properties": {
+								"id": {
+								"description": "foreign key",
+								"type": "integer"
+							}
+							},
+							"required": [
+								"id"
+							]
+						},
+						{
+							"type": [
+								"object",
+								"null"
+							],
+							"properties": {
+								"id": {
+									"description": "foreign key", 
+									"type": "integer"
+								}
+							},
+							"required": [
+								"id"
+							]
+						}
+					]
+				}
+		},
+	"required": ["id","titre","texte","prix","dateParution", "support"]
+		}
+	]
+}

@@ -1,0 +1,101 @@
+  
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Arts & Chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="mur.css">
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<meta charset="UTF-8">
+<title th:text="#{project.title}"></title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+
+
+
+</head>
+<body>
+
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+	<div class="container">
+
+		<div class="wrapper">
+			<div class="center-line">
+				<a href="#" class="scroll-icon"><i class="fas fa-caret-up"></i></a>
+			</div>
+
+			<div th:each="publication: ${listPublication}">
+				<div class="row row-1">
+					<section>
+						<i class="icon fas fa-star"></i>
+						<div class="details">
+							<span
+								th:text="${publication.utilisateur.prenom} + ' '+ ${publication.utilisateur.nom}"
+								class="title"></span>
+						</div>
+						<hr />
+						<h5 class= "titlePub" th:text="${publication.titre}"></h5>
+						<br/>
+						<div th:each="s: ${publication.support}" class="support">
+							<img th:src="${s.chemin}" width="300" height="200" />
+						</div>
+						<br />
+						<p th:text=${publication.texte} class="text"></p>
+						<br />
+						<p class="text" th:inline="text"> [[${publication.nbSignalement}]] signalements a ce jour</p>
+						<div class="bottom">
+							<a th:href="'profilUti?id='+${publication.utilisateur.id}">Accéder
+								au profil</a>
+						</div>
+						<br/>
+						<div class="bottom">
+							<a th:href="'signalement?idpublication='+${publication.id}+'&userid='+${user.id}">Signaler la publication</a>
+						</div>
+					</section>
+				</div>
+			</div>
+
+		</div>
+		<!-- fin wrapper -->
+
+
+		<div>
+			<div class="center">
+				<div class="property-card">
+					<a th:href="'affInfoUti?id='+${user.id}">
+						<div class="property-image">
+							<div class="property-image-title">
+								<!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+							</div>
+						</div>
+					</a>
+					<div class="property-description">
+						<h3 th:text="${user.nom} +' '+ ${user.prenom} "></h3>
+						<br /> <label th:text="${user.telephone}"></label><br /> <label
+							th:text="${user.mail}"></label>
+					</div>
+					<div class="property-social-icons">
+						<a ></a><!-- I would usually put multipe divs inside here set to flex. Some people might use Ul li. Multiple Solutions -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- /.container 
+<a th:href="'s/'"/> <p>Publication</p>-->
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+
+</body>
+</html>

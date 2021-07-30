@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!--<th:unless="${success}" meta http-equiv="refresh" content="5;url=http://localhost:8085">-->
+
+<title>Arts & Chat</title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+</head>
+<body>
+
+	<!-- Haut de page -->
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header card bg-info text-white">
+				<h2>[[${message}]]</h2>
+			</div>
+			<div class="card-body">
+				<form th:object="${signalementBean}" method="POST"
+					action="traitement-signalement" th:unless="${success}">
+					<input th:value="${idpublication}" name="identifiant" type="hidden" />
+					<input th:value="${userid}" name="userid" type="hidden" />
+					<table>
+						<tr>
+							<td><label for="motifSignalementBeanId">Choisissez un motif de signalement</label></td>
+							<td><select name="motifSignalementBeanId">
+									<option th:each="motifSignalementBean : ${listeMotifSignalement}" th:value="${motifSignalementBean.id}"
+										th:utext="${motifSignalementBean.libelle_motif_signalement}"></option>
+							</select></td>
+						</tr>
+					</table>
+					<input type="submit" value="Valider" class="btn-success"/>&nbsp;
+					<input type="button" value="Annuler" onclick="window.history.back()" class="btn-danger"/>&nbsp;
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Pied de page -->
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+
+</body>
+</html>

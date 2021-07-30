@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header" />
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>User page (Spring Security protected)</h1>
+
+			<div class="container mt-5">
+				<div class="card">
+					<div class="card-header">Liste des utilisateurs</div>
+					<div class="card-body">
+
+						</form>
+
+
+						<table class="table">
+							<tr>
+								<th>ID</th>
+								<th>Nom</th>
+							</tr>
+							<tr th:each="u : ${users}">
+								<td th:text="${u.id}"></td>
+								<td th:text="${u.nom}"></td>
+
+							</tr>
+						</table>
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+	<!-- /.container -->
+	<div th:replace="fragments/footer :: footer" />
+
+</body>
+</html>

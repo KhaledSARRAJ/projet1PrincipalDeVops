@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/headerResources :: header_resources">
+<title>Arts & Chat</title>
+</head>
+
+<body>
+<nav th:insert="fragments/navbar :: nav_fragment" ></nav>
+
+<div class="container">
+
+    <div class="card">
+        <div class="card-header card bg-info text-white">
+            <h2>Faire une publication</h2>
+        </div>
+        <div class="card-body">
+				<form th:action="@{save}" method="post">
+
+					<div class="form-group">
+						<label class="control-label">Titre :</label> <input
+							class="form-control" type="text" name="titre"
+							th:value="${productDto.titre}" /> <span class="red"
+							th:errors="${productDto.titre}"></span>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Texte :</label> <input
+							class="form-control" type="text" name="texte"
+							th:value="${productDto.texte}" /> <span class="red"
+							th:errors="${productDto.texte}"></span>
+
+					</div>
+			
+					<div>
+						<button type="submit" class="btn btn-primary">Enregistrer</button>
+					</div>
+
+				</form>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+
+</div>
+
+<footer th:insert="fragments/footer :: footer_fragment"></footer>
+</body>
+</html>

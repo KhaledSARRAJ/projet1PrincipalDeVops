@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Arts & Chat</title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+</head>
+<body>
+
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+	<div class="spacer col-md-6">
+
+		<div class="panel panel-default">
+		<!-- 	<div class="panel-heading">Modifier la publication</div> -->
+		<h3>Modifier la publication</h3>
+			<div class="panel-body">
+				<br/>
+				<form th:action="@{/save}" th:object="${productDto}" method="post">
+			 		<div class="form-group" >
+					<!-- <label class="control-label" >ID :</label>  -->	
+						<input class="form-control" type="hidden" name="id" th:field="*{id}" /> 
+						<span class="red" th:errors="*{id}" ></span>
+					</div>  
+					<div class="form-group">
+						<label class="control-label">Titre :</label> 
+						<input class="form-control" type="text" name="titre" th:field="*{titre}" />
+						<span class="red" th:errors="*{titre}"></span> 
+					</div>
+					<div class="form-group">
+						<label class="control-label">Texte :</label> 
+						<input class="form-control" type="text" name="texte" th:field="*{texte}" />
+						<span class="red" th:errors="*{texte}"></span> 
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Enregistrer</button>
+					</div>
+
+				</form>
+
+
+
+			</div>
+		</div>
+	</div>
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+</body>
+</html>

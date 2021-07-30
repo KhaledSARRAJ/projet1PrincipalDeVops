@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Arts & Chat</title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+</head>
+<body>
+
+	<!-- Haut de page -->
+	<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header card bg-info text-white">
+				<h2>Détail profil</h2>
+				<p>
+					<a th:href="'majUti?id='+${utilisateur.id}" class="btn btn-success">Modifier
+						profil</a>
+				</p>
+			</div>
+
+			<div class="card-body">
+
+				<form th:object="${utilisateur}" method="POST"
+					action="sauvegardeUti">
+					<input th:field="*{id}" name="id" type="hidden" />
+					<table>
+						<tr>
+							<td><label>Nom</label></td>
+							<td><input th:field="*{nom}" name="nom" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label>Prénom</label></td>
+							<td><input th:field="*{prenom}" name="prenom" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label>Sexe</label></td>
+							<td><select th:field="*{sexe.id}">
+									<option th:each="sexes : ${listeSexe}" th:value="${sexes.id}"
+										th:utext="${sexes.nonSexe}"></option>
+							</select></td>
+						</tr>
+						<tr>
+							<td><label>Date de naissance</label></td>
+							<td th:utext="*{dateNais}" /></td>
+						</tr>
+						<tr>
+							<td><label>Mail</label></td>
+							<td><input th:field="*{mail}" name="mail" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label>Téléphone</label></td>
+							<td><input th:field="*{telephone}" name="telephone"
+								type="text"/></td>
+						</tr>
+						<tr>
+							<td><label>Rue</label></td>
+							<td><input th:field="*{rue}" name="rue" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label>Ville</label></td>
+							<td><select th:field="*{ville.id}">
+									<option th:each="villes : ${listeVille}"
+										th:value="${villes.id}"
+										th:utext="${villes.codePostale} + ' ' + ${villes.localite} + ' ' + ${villes.pays}"></option>
+							</select></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input th:field="*{ville.localite} "></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input th:field="*{ville.pays} "></td>
+						</tr>
+						<tr>
+							<td><label>Complement</label></td>
+							<td><input th:field="*{complement}" name="complement"
+								type="text" /></td>
+						</tr>
+						<tr>
+							<td><label>Profile</label></td>
+							<td><input th:field="*{profile}" name="profile" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label>Droits</label></td>
+							<td th:utext="*{droits.typeDroit}"></td>
+						</tr>
+						<tr>
+							<td><label>Date d'inscription</label></td>
+							<td th:utext="*{dateInscription}" /></td>
+						</tr>
+
+
+					</table>
+					<input type="submit" value="Enregistrer" />
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Pied de page -->
+	<footer th:insert="fragments/footer :: footer_fragment"></footer>
+
+</body>
+</html>

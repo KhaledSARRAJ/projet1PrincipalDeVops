@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/headerResources :: header_resources"></head>
+<body>
+<header th:insert="fragments/navbar :: nav_fragment"></header>
+
+<div class="container">
+    <div class="card">
+
+        <div class="card-header card bg-info text-white">
+            <h2>Ajouter une image</h2>
+        </div>
+
+        <div class="card-body">
+            <br/>
+            <div th:if="${message}" th:text="${message}" th:class="${'alert '+ alertClass}"></div>
+            <br/>
+            <form th:action="@{/upload/{id} (id = ${id})}" method="post" enctype="multipart/form-data">
+                <div class="col-sm-12" >
+
+                    <div class="form-group">
+                        <label>Référence Publication</label>
+                        <label class="form-control bg-light"><span th:text="*{id}"></span></label>
+                        <p><input type="hidden" class="form-control" th:field="*{id}"/></p>
+                    </div>
+
+                    <div class="custom-file">
+                        <label class="custom-file-label">Sélectionner une image (type:jpg/png, max-size:300 KB)</label>
+                        <input type="file" name="file" class="custom-file-input"/>
+                    </div>
+                    <hr/>
+                    <button type="submit" class="btn btn-primary btn-block mb-3">Ajouter image</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="card-footer">
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<footer th:insert="fragments/footer :: footer_fragment"></footer>
+</body>
+</html>

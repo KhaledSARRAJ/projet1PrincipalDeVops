@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Projet 1</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mur.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+   
+    <meta charset="UTF-8">
+<title th:text="#{project.title}"></title>
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " />
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<style>
+body {
+	padding-top: 100px;
+}
+</style>
+
+</head>
+<body>
+
+<nav th:insert="fragments/navbar :: nav_fragment"></nav>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>403 - L'accÃ¨s est refusÃ©</h1>
+        <div th:inline="text">Bonjour '[[${#httpServletRequest.remoteUser}]]', 
+                vous n'Ãªtes pas autorisÃ© Ã  accÃ©der Ã  cette page.</div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<footer th:insert="fragments/footer :: footer_fragment"></footer>
+
+</body>
+</html>
