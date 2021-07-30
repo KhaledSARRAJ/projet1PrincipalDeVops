@@ -15,7 +15,7 @@ import fr.eql.projet01.entity.Utilisateur;
 import fr.eql.projet01.service.UtilisateurService;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:8090"})
+@CrossOrigin(origins = { "http://ec2-18-224-179-88.us-east-2.compute.amazonaws.com:8090"})
 @RequestMapping(value="/chat-api-rest" , headers="Accept=application/json")
 @SessionAttributes("utilisateur")
 public class ChatController {
