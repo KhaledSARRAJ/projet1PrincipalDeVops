@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/aec-api-rest/themes/**").permitAll()
 		.antMatchers("/chat-api-rest/**").permitAll()
 		.antMatchers("/administrateur/**").permitAll()
+		.antMatchers("http://ec2-18-224-179-88.us-east-2.compute.amazonaws.com:8090/**/**").hasAnyRole("USER")
 		.antMatchers("http://al35-store-admin-panel.s3-website.eu-west-3.amazonaws.com/**/**").hasAnyRole("ADMIN")
 		.antMatchers("/user/**").hasAnyRole("USER")
 		.anyRequest().authenticated()
