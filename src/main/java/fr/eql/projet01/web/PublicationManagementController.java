@@ -132,10 +132,8 @@ public class PublicationManagementController {
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		System.out.println("ID: " + utilisateur.getId());
 		Publication optionalProductDto = productService.findById(utilisateur.getId());
-
 		List<Support> listSupport = supportservice.findByPublicationSupport(optionalProductDto);
 		optionalProductDto.setSupport(listSupport);
-
 		model.addAttribute("productDto", optionalProductDto);
 		return "adminProductDetails";
 	}*/
