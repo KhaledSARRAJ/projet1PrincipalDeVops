@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/chat-api-rest/**").permitAll()
 		.antMatchers("/administrateur/**").permitAll()
 		.antMatchers("http://ec2-18-224-179-88.us-east-2.compute.amazonaws.com:8090/**/**").hasAnyRole("USER")
-		.antMatchers("http://3.144.32.173:8080/**/**").hasAnyRole("ADMIN")
+		.antMatchers("http://localhost:4300/**/**").hasAnyRole("ADMIN")
 		.antMatchers("/user/**").hasAnyRole("USER")
 		.anyRequest().authenticated()
 		.and()
