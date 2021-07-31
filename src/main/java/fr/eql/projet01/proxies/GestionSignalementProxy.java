@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import fr.eql.projet01.beans.SignalementBean;
 
-@FeignClient(name = "gestion-signalement", url = "localhost:8081/aec-api-rest/signalements")
+@FeignClient(name = "gestion-signalement", url = "http://18.224.51.251:8080/aec-api-rest/signalements")
 public interface GestionSignalementProxy {
 	
 	@GetMapping("/countForMe/{type}/{identifiant}")
