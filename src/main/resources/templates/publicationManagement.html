@@ -68,7 +68,7 @@ body {
 								th:href="@{uploadImageForm(id=${productDto.id})}"
 									class="btn btn-success">Ajouter</a></td>
 								<td><a class="btn btn-info"
-									th:href="@{edit/{id} (id=${productDto.id})}">Modifier</a></td>
+									th:href="@{edit(id=${productDto.id})}">Modifier</a></td>
 
 								<td><a class="btn btn-danger"
 									onclick="javascript:return confirm('Etes vous sûre de vouloir supprimer ?')"

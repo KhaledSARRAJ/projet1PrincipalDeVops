@@ -177,8 +177,8 @@ public class PublicationManagementController {
 		return "/adminProductDetails";
 
 	}
-	@RequestMapping("/edit/{id}")
-	public String edit(Model model, @PathVariable("id") Long id, HttpSession session) {
+	@RequestMapping("/edit")
+	public String edit(Model model, Long id, HttpSession session) {
 		Publication p = productService.findById(id);
 		// .orelse(null)
 		List<Support> listSupport = supportservice.findByPublicationSupport(p);
