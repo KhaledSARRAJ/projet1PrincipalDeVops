@@ -123,7 +123,7 @@ public class PublicationManagementController {
 		model.addAttribute("motCle", motCle);
 		model.addAttribute("pages", new int[publicationsList.getTotalPages()]); // 
 
-		return "publicationManagement"; 
+		return "/publicationManagement"; 
 	}
 
 
@@ -140,8 +140,8 @@ public class PublicationManagementController {
 		return "adminProductDetails";
 	}*/
 
-	@RequestMapping("/find/{id}")
-	public String getProductById( @PathVariable("id") Long id, HttpSession session, Model model) {
+	@RequestMapping("/find")
+	public String getProductById(Long id, HttpSession session, Model model) {
 		//Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		//System.out.println("ID: " + utilisateur.getId());
 		Publication optionalProductDto = productService.findById(id);
@@ -149,7 +149,7 @@ public class PublicationManagementController {
 		List<Support> listSupport = supportservice.findByPublicationSupport(optionalProductDto);
 		optionalProductDto.setSupport(listSupport);
 		model.addAttribute("productDto", optionalProductDto);
-		return "adminProductDetails";
+		return "/adminProductDetails";
 	}
 
 	@RequestMapping(path = "/deletePublications")
@@ -164,19 +164,19 @@ public class PublicationManagementController {
 	@GetMapping(value = "/FormPublication")
 	public String formPublication(Model model) {
 		model.addAttribute("productDto", new Publication());
-		return "FormPublication";
+		return "/FormPublication";
 	}
 
 	@RequestMapping("/save")
 	public String save(Model model, @ModelAttribute("productDto") Publication publication, 
 			HttpSession session, BindingResult bindingresult) {
 		if (bindingresult.hasErrors()) {
-			return "publicationAddForm";
+			return "/publicationAddForm";
 		}
 		publication.setUtilisateur((Utilisateur) session.getAttribute("utilisateur"));
 		productService.saveOrUpdate(publication);
 		model.addAttribute("productDto", publication);
-		return "adminProductDetails";
+		return "/adminProductDetails";
 
 	}
 	@RequestMapping("/edit/{id}")
@@ -188,17 +188,17 @@ public class PublicationManagementController {
 
 		model.addAttribute("productDto", p);
 		System.out.println(p);
-		return "EditPublication";
+		return "/EditPublication";
 	}
 
-	@GetMapping("/uploadImageForm/{id}")
-	public String showImageForm(@PathVariable("id") Long id,Model model){
-		//productService.findById(id);
+	@GetMapping("/uploadImageForm")
+	public String showImageForm(Long id,Model model){
+		productService.findById(id);
 		model.addAttribute("id",id);
-		return "publicationAddImageFrom";    }
+		return "/publicationAddImageFrom";    }
 
-	@PostMapping("/upload/{id}")
-	public String uploadFile(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file,Model model, RedirectAttributes redirectAttributes){
+	@PostMapping("/upload")
+	public String uploadFile(Long id, @RequestParam("file") MultipartFile file,Model model, RedirectAttributes redirectAttributes){
 		System.out.println("id = " + id);
 		System.out.println("file.getSize() = "+file.getSize());
 		System.out.println("Image Size KB:" + file.getSize() / 1024);

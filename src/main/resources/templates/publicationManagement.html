@@ -27,7 +27,7 @@ body {
 						une Publication</a>
 				</p>
 			</div>
-			<form th:action="@{/Publications}" method="get">
+			<form th:action="@{Publications}" method="get">
 				<div class="mb-3">
 					<label class="control-label">Mot Clé:</label> <input type="text"
 						name="motCle" th:value="${motCle}" class="p-1" />
@@ -62,17 +62,17 @@ body {
 								<td th:text="${productDto.titre}"></td>
 								<td th:text="${productDto.texte}"></td>
 
-								<td><a href="#" class="btn btn-info" th:href="@{/find/{id} (id=${productDto.id})}">Details</a>
+								<td><a class="btn btn-info" th:href="@{find(id=${productDto.id})}">Details</a>
 								</td>
 								<td><a
-								th:href="@{/uploadImageForm/{id} (id=${productDto.id})}"
+								th:href="@{uploadImageForm(id=${productDto.id})}"
 									class="btn btn-success">Ajouter</a></td>
 								<td><a class="btn btn-info"
-									th:href="@{/edit/{id} (id=${productDto.id})}">Modifier</a></td>
+									th:href="@{edit/{id} (id=${productDto.id})}">Modifier</a></td>
 
 								<td><a class="btn btn-danger"
 									onclick="javascript:return confirm('Etes vous sûre de vouloir supprimer ?')"
-									th:href="@{/deletePublications(id=${productDto.id},page=${currentPage}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+									th:href="@{deletePublications(id=${productDto.id},page=${currentPage}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
 
 							</tr>
 
@@ -81,7 +81,7 @@ body {
 					<ul class="nav nav-pills">
 						<li th:each="page,status:${pages}"><a
 							th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
-							th:href="@{/Publications(page=${status.index}, size=${size}, motCle=${motCle})}"
+							th:href="@{Publications(page=${status.index}, size=${size}, motCle=${motCle})}"
 							th:text="${status.index}"></a></li>
 					</ul>
 				</div>

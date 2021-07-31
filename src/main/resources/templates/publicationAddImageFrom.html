@@ -15,17 +15,17 @@
             <br/>
             <div th:if="${message}" th:text="${message}" th:class="${'alert '+ alertClass}"></div>
             <br/>
-            <form th:action="@{/upload/{id} (id = ${id})}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/upload(id = ${id})}" method="post" enctype="multipart/form-data">
                 <div class="col-sm-12" >
 
                     <div class="form-group">
-                        <label>RÃ©fÃ©rence Publication</label>
+                        <label>Référence Publication</label>
                         <label class="form-control bg-light"><span th:text="*{id}"></span></label>
                         <p><input type="hidden" class="form-control" th:field="*{id}"/></p>
                     </div>
 
                     <div class="custom-file">
-                        <label class="custom-file-label">SÃ©lectionner une image (type:jpg/png, max-size:300 KB)</label>
+                        <label class="custom-file-label">Sélectionner une image (type:jpg/png, max-size:300 KB)</label>
                         <input type="file" name="file" class="custom-file-input"/>
                     </div>
                     <hr/>

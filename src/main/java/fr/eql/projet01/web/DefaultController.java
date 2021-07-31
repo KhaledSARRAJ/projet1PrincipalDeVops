@@ -143,19 +143,19 @@ public class DefaultController {
     	
     	if(utilisateurRepository.existsByMail(utilisateur.getMail())) {
     		model.addAttribute("message", "L'adresse mail " + utilisateur.getMail() + " est déja utilisée !");
-    		return "/inscription";
+    		return "inscription";
     	}
     	
     	if(utilisateurRepository.existsByProfile(utilisateur.getProfile())) {
     		model.addAttribute("message", "Le login " + utilisateur.getProfile() + " est déja utilisé !");
-    		return "/inscription";
+    		return "inscription";
     	}
     	
     	if(password.equals(passwordConfirm)) {
     		passwordEncode = PasswordEncoder.encode(password);
     	} else {
     		model.addAttribute("message", "Les mots de passes sont différents !");
-    		return "/inscription";
+    		return "inscription";
     	}
     	
     	Sexe sexe = sexeRepository.getById(idsexe);
@@ -168,17 +168,17 @@ public class DefaultController {
     	utilisateur.setPasseWord(passwordEncode);
     	
     	if(bindingResult.hasErrors()) {
-    		redirect = "/inscription";
+    		redirect = "inscription";
     		//rv.setUrl("/inscription"); 
     	} else {
     		try {
     			utilisateurRepository.save(utilisateur);
     			//rv.setUrl("/login");
-    			redirect = "/login";
+    			redirect = "login";
     		} catch (Exception e) {
     			model.addAttribute("message", "Oups, quelque chose c'est mal passé ! :-)");
     			//rv.setUrl("/inscription");
-    			redirect = "/inscription";
+    			redirect = "inscription";
 ;    		}
     	}
     	return redirect;
