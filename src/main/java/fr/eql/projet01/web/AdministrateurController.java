@@ -35,10 +35,10 @@ import fr.eql.projet01.service.SupportService;
 import fr.eql.projet01.service.UtilisateurService;
 
 @RestController
-@CrossOrigin(origins = "*")
 //@CrossOrigin (origins = { "http://localhost:4300"}) 
 //@CrossOrigin (origins = { "http://3.144.32.173:8080"}) 
 //@CrossOrigin (origins = { "http://localhost:4300"}) 
+@CrossOrigin (origins = { "*"}) 
 @RequestMapping(value = "/administrateur", headers = "Accept=application/json")
 public class AdministrateurController {
 
