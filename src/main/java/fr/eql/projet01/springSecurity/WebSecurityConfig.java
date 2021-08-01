@@ -48,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("http://18.224.51.251:8080/aec-api-rest/**/**").hasAnyRole("USER")
 		.antMatchers("http://ec2-18-224-179-88.us-east-2.compute.amazonaws.com:8090/**/**").hasAnyRole("ADMIN")
 		.antMatchers("http://ec2-18-224-179-88.us-east-2.compute.amazonaws.com:8090/**/**").hasAnyRole("USER")
+        .antMatchers("http://**/**/**").hasAnyRole("ADMIN")
+		.antMatchers("/user/**").hasAnyRole("USER")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
