@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import fr.eql.projet01.beans.MotifSignalementBean;
 
-@FeignClient(name = "gestion-signalement", url = "localhost:8081/aec-api-rest/motifSignalements")
+@FeignClient(name = "gestion-signalement", url = "http://18.224.51.251:8080/aec-api-rest/motifSignalements")
 public interface GestionMotifSignalementProxy {
 
 	@GetMapping

@@ -35,6 +35,7 @@ import fr.eql.projet01.service.SupportService;
 import fr.eql.projet01.service.UtilisateurService;
 
 @RestController
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @CrossOrigin (origins = { "http://localhost:4300"}) 
 @RequestMapping(value = "/administrateur", headers = "Accept=application/json")
 public class AdministrateurController {
@@ -87,26 +88,9 @@ public class AdministrateurController {
 
 	// Ici l'admin peut voir tous les publications d'un utilisateur à l'aide de son
 	// http://localhost:8085/administrateur/publications/1
-	@GetMapping("/publications/{id}")
-	public List<Publication> AffichePublications(@PathVariable("id") Long id) {
-		Utilisateur uti = utilisateurService.findInfoUtilisateur(id);
-		List<Abonnement> listeAbo = aboService.findAllFollowerByUtilisateur(uti);
-		List<Utilisateur> listUtilisateur = new ArrayList<Utilisateur>();
-		List<Publication> listPublication = new ArrayList<Publication>();
-
-		for (Abonnement abo : listeAbo) {
-			Utilisateur a = abo.getFollowing();
-			listUtilisateur.add(a);
-		}
-		for (Utilisateur u : listUtilisateur) {
-			List<Publication> p = u.getListPublication();
-			for (Publication m : p) {
-				List<Support> listSupport = supportService.findSupportByPublication(m);
-				m.setSupport(listSupport);
-			}
-			listPublication.addAll(p);
-		}
-		return listPublication;
+	@GetMapping("/publication/{id}")
+	public Publication AffichePublication(@PathVariable("id") Long id) {
+		return publicationService.findById(id);
 
 	}
 
