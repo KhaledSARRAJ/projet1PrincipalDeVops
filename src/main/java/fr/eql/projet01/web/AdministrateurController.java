@@ -38,7 +38,7 @@ import fr.eql.projet01.service.UtilisateurService;
 //@CrossOrigin (origins = { "http://localhost:4300"}) 
 //@CrossOrigin (origins = { "http://3.144.32.173:8080"}) 
 //@CrossOrigin (origins = { "http://localhost:4300"}) 
-@CrossOrigin (origins = { "*"}) 
+@CrossOrigin (origins = { "http://myadminstratorapplication.s3-website.us-east-2.amazonaws.com/"}) 
 @RequestMapping(value = "/administrateur", headers = "Accept=application/json")
 public class AdministrateurController {
 
